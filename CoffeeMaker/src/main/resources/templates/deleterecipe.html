@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>View Recipes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Coffee Recipes</h1>
+	<div layout:fragment="content">
+		<div ng-app="myApp" ng-controller="DeleteRecipeController as cntl">
+			<ul>
+				<li ng-repeat="recipe in recipes">
+					<label>
+						<input type="radio" ng-model="$parent.name" name="name" value="{{recipe.name}}" required="true" />
+						{{recipe.name}}
+					</label>
+				</li>
+			</ul>
+			<br />
+			<label> 
+			    <input type="checkbox" name="all" class="checkbox" ng-model="deleteAll" />
+				Delete all recipes?
+			</label>
+			<input type="submit" value="Delete" ng-click="cntl.del()" ng-if="recipes.length > 0" />
+			<div ng-if="submissionSuccess">Recipe deleted successfully</div>
+			<div ng-if="0 >= recipes.length">There are no recipes in the Coffee Maker.</div>
+
+		</div>
+		<a href="/index">Home</a>
+	</div>
+	
+	<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/service/coffee_maker_service.js"></script>
+	<script src="js/controller/delete_recipe_controller.js"></script>
+	
+</body>
+</html>

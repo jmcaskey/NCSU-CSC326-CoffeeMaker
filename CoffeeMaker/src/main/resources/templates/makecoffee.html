@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>View Recipes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<h1>Coffee Recipes</h1>
+
+	<div layout:fragment="content">
+		<div ng-app="myApp" ng-controller="MakeCoffeeController as ctrl">
+			<ul>
+				<li ng-repeat="recipe in recipes">
+					<label>
+						{{recipe.name + " - " + recipe.price + "¢"}}
+						<input type="radio" ng-model="$parent.name" name="name" value="{{recipe.name}}" required="true" />
+					</label>
+				</li>
+			</ul>
+			<br />
+			<form name = "coffeeForm" >
+				<label for="amtPaid">Enter payment</label> 
+				<input type="text" ng-model="amtPaid" name="amtPaid" required="true" /> 
+				<input type="submit" ng-click="ctrl.makeCoffee()" value="Make Coffee" ng-disabled = "coffeeForm.$invalid" /> 
+			</form>
+			<br />
+
+			<div ng-show="submissionSuccess">Coffee was made. Your change
+				is {{change}}.</div>
+
+                        <div ng-show="submissionFailureFunds">Sale rejected. Insufficient funds. Your change is {{change}}.</div>
+                        <div ng-show="submissionFailureInvent">Sale rejected. Insufficient Inventory. Your change is {{change}}.</div>
+			<div ng-show="submissionError">An error occurred: {{error}}</div>
+			<br />
+			<a href="/index">Home</a>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/service/coffee_maker_service.js"></script>
+	<script src="js/controller/make_coffee_controller.js"></script>
+
+</body>
+</html>
